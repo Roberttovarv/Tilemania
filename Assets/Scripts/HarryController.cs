@@ -7,37 +7,44 @@ public class HarryController : MonoBehaviour
     Rigidbody2D rigidBody;
     SpriteRenderer sprite;
     Animator myAnimator;
+    [SerializeField] Collider2D bodyCollider;
 
-    float runVelocity = 5f;
+    int floorLayer;
 
-    bool isRunning;
-    bool isClimbing;
+    float climbSpeed = 5f;
+    bool isGrounded;
+    bool IsOnLadder;
+
+    [SerializeField] float runVelocity = 5f;
+    [SerializeField] float jumpForce = 10f;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         myAnimator = GetComponent<Animator>();
+        floorLayer = LayerMask.GetMask("Floor");
     }
 
     void Update()
     {
         Iddle();
+        ClimbLadder();
     }
 
     void FixedUpdate()
     {
-        Run();        
+        Run();
     }
 
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
-        print(moveInput);
     }
     void Run()
     {
         rigidBody.linearVelocity = new Vector2(moveInput.x * runVelocity, rigidBody.linearVelocityY);
+
         sprite.flipX = rigidBody.linearVelocity.x < -0.1f ? true :
                 rigidBody.linearVelocity.x > 0.1f ? false : sprite.flipX;
 
@@ -50,5 +57,39 @@ public class HarryController : MonoBehaviour
         {
             myAnimator.SetBool("isRunning", false);
         }
+
+    }
+
+    void OnJump(InputValue value)
+    {
+        isGrounded = bodyCollider.IsTouchingLayers(floorLayer);
+        if (value.isPressed && (isGrounded || IsOnLadder))
+        {
+            rigidBody.linearVelocity += new Vector2(0f, jumpForce);
+        }
+    }
+    void ClimbLadder()
+    {
+        IsOnLadder = bodyCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+
+        if (!IsOnLadder)
+        {
+            myAnimator.SetBool("isClimbing", false);
+            rigidBody.gravityScale = 8;
+            myAnimator.speed = 1;
+            return;
+        }
+        if (isGrounded && IsOnLadder)
+        {
+            myAnimator.SetBool("isClimbing", false);
+
+        }
+
+        rigidBody.linearVelocity = new Vector2(rigidBody.linearVelocityX, moveInput.y * climbSpeed);
+        rigidBody.gravityScale = 0;
+        myAnimator.SetBool("isClimbing", true);
+
+        myAnimator.speed = rigidBody.linearVelocityY == 0 ? 0 : 1;
+
     }
 }
