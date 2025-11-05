@@ -8,6 +8,7 @@ public class HarryController : MonoBehaviour
     SpriteRenderer sprite;
     Animator myAnimator;
     [SerializeField] Collider2D bodyCollider;
+    [SerializeField] Collider2D feetCollider;
 
     int floorLayer;
 
@@ -62,7 +63,7 @@ public class HarryController : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        isGrounded = bodyCollider.IsTouchingLayers(floorLayer);
+        isGrounded = feetCollider.IsTouchingLayers(floorLayer);
         if (value.isPressed && (isGrounded || IsOnLadder))
         {
             rigidBody.linearVelocity += new Vector2(0f, jumpForce);
@@ -71,6 +72,12 @@ public class HarryController : MonoBehaviour
     void ClimbLadder()
     {
         IsOnLadder = bodyCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+
+        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+                        rigidBody.gravityScale = 0;
+
+        }
 
         if (!IsOnLadder)
         {
