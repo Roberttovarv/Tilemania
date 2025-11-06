@@ -18,7 +18,7 @@ TagManager:
   - Player
   - Mushy
   - Enemy
-  - 
+  - Spikes
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Mushy
     uniqueID: 3894640245
+    locked: 0
+  - name: Spikes
+    uniqueID: 2625097849
     locked: 0
   - name: Enemy
     uniqueID: 3685552453

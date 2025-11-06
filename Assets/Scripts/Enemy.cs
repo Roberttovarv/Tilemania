@@ -1,15 +1,19 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
     Rigidbody2D rigidBody;
+    [SerializeField] HarryController harry;
+    Rigidbody2D harryBody;
     int dir = 1;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        harry = FindFirstObjectByType<HarryController>();
     }
 
     void Update()
@@ -21,6 +25,17 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Platforms")) dir = -dir;
         Flip();
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (collision.collider == harry.feetCollider)
+            {
+                Destroy(gameObject);
+                harry.rigidBody.linearVelocity += new Vector2(0f, harry.jumpForce);
+            }
+        }
     }
 
     void Flip()

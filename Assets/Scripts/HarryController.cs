@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class HarryController : MonoBehaviour
 {
     Vector2 moveInput;
-    Rigidbody2D rigidBody;
+    public Rigidbody2D rigidBody;
     SpriteRenderer sprite;
     Animator myAnimator;
-    [SerializeField] Collider2D bodyCollider;
-    [SerializeField] Collider2D feetCollider;
+    [SerializeField] public Collider2D bodyCollider;
+    [SerializeField] public Collider2D feetCollider;
 
     int floorLayer;
 
@@ -19,7 +20,7 @@ public class HarryController : MonoBehaviour
     bool isAlive = true;
 
     [SerializeField] float runVelocity = 5f;
-    [SerializeField] float jumpForce = 10f;
+    [SerializeField] public float jumpForce = 10f;
 
     void Start()
     {
@@ -109,12 +110,18 @@ public class HarryController : MonoBehaviour
     }
     void Die()
     {
-        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Spikes")))
         {
             myAnimator.SetTrigger("isDead");
             isAlive = false;
-            rigidBody.AddForce(new Vector2(Random.Range(-1f, 1f), 55f), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(0, 55f), ForceMode2D.Impulse);
             sprite.color = new Color(1f, 0.63f, 0.59f);
+            Invoke(nameof(LoadScene), 1);
         }
+    }
+
+    void LoadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
