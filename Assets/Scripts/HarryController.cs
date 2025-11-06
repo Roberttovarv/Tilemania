@@ -16,6 +16,8 @@ public class HarryController : MonoBehaviour
     bool isGrounded;
     bool IsOnLadder;
 
+    bool isAlive = true;
+
     [SerializeField] float runVelocity = 5f;
     [SerializeField] float jumpForce = 10f;
 
@@ -29,8 +31,10 @@ public class HarryController : MonoBehaviour
 
     void Update()
     {
+        if (!isAlive) return;
         Iddle();
         ClimbLadder();
+        Die();
     }
 
     void FixedUpdate()
@@ -40,6 +44,8 @@ public class HarryController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if (!isAlive) return;
+
         moveInput = value.Get<Vector2>();
     }
     void Run()
@@ -63,6 +69,8 @@ public class HarryController : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        if (!isAlive) return;
+
         isGrounded = feetCollider.IsTouchingLayers(floorLayer);
         if (value.isPressed && (isGrounded || IsOnLadder))
         {
@@ -75,7 +83,7 @@ public class HarryController : MonoBehaviour
 
         if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
-                        rigidBody.gravityScale = 0;
+            rigidBody.gravityScale = 0;
 
         }
 
@@ -98,5 +106,15 @@ public class HarryController : MonoBehaviour
 
         myAnimator.speed = rigidBody.linearVelocityY == 0 ? 0 : 1;
 
+    }
+    void Die()
+    {
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            myAnimator.SetTrigger("isDead");
+            isAlive = false;
+            rigidBody.AddForce(new Vector2(Random.Range(-1f, 1f), 55f), ForceMode2D.Impulse);
+            sprite.color = new Color(1f, 0.63f, 0.59f);
+        }
     }
 }
