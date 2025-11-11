@@ -10,6 +10,9 @@ public class HarryController : MonoBehaviour
     Animator myAnimator;
     [SerializeField] public Collider2D bodyCollider;
     [SerializeField] public Collider2D feetCollider;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
+    public int dir;
 
     int floorLayer;
 
@@ -55,6 +58,7 @@ public class HarryController : MonoBehaviour
 
         sprite.flipX = rigidBody.linearVelocity.x < -0.1f ? true :
                 rigidBody.linearVelocity.x > 0.1f ? false : sprite.flipX;
+        dir = sprite.flipX ? -1 : 1;
 
         myAnimator.SetBool("isRunning", true);
 
@@ -108,6 +112,12 @@ public class HarryController : MonoBehaviour
         myAnimator.speed = rigidBody.linearVelocityY == 0 ? 0 : 1;
 
     }
+    void OnAttack(InputValue value)
+    {
+        if (!isAlive) return;
+        Instantiate(bullet, gun.position, transform.rotation);
+    }
+
     void Die()
     {
         if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Spikes")))

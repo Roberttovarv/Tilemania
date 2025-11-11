@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
     Rigidbody2D rigidBody;
-    [SerializeField] HarryController harry;
+    HarryController harry;
     Rigidbody2D harryBody;
     int dir = 1;
 
