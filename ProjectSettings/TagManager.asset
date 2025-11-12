@@ -21,7 +21,7 @@ TagManager:
   - Enemy
   - Spikes
   - Bullets
-  - 
+  - Coin
   - 
   - 
   - 
@@ -63,6 +63,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3685552453
+    locked: 0
+  - name: Coin
+    uniqueID: 1967631589
     locked: 0
   - name: Player
     uniqueID: 550956003
