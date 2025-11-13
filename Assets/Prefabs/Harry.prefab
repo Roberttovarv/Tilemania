@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 664530945903584743}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 550956003
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 15
   m_Sprite: {fileID: 1857188551261513057, guid: ec8e900c3357945488c4201c1b6a8106, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -308,10 +308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3c6b9dfd4100945a0f36029fb37765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
+  rigidBody: {fileID: 4802409972923288090}
   bodyCollider: {fileID: 8773724963952582166}
   feetCollider: {fileID: 2291261712489728527}
   bullet: {fileID: 59817641152212381, guid: c4737607d5712e14ca9a120e80809503, type: 3}
   gun: {fileID: 664530945903584743}
+  dir: 0
   runVelocity: 5
   jumpForce: 15
