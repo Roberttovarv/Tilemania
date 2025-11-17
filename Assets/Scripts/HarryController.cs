@@ -132,6 +132,7 @@ public class HarryController : MonoBehaviour
 
     void LoadScene()
     {
-        SceneManager.LoadScene(0);
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }

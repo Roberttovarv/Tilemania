@@ -22,7 +22,7 @@ TagManager:
   - Spikes
   - Bullets
   - Coin
-  - 
+  - Door
   - 
   - 
   - 
@@ -66,6 +66,9 @@ TagManager:
     locked: 0
   - name: Coin
     uniqueID: 1967631589
+    locked: 0
+  - name: Door
+    uniqueID: 3452888535
     locked: 0
   - name: Player
     uniqueID: 550956003
