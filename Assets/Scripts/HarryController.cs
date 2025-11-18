@@ -127,6 +127,7 @@ public class HarryController : MonoBehaviour
             rigidBody.AddForce(new Vector2(0, 55f), ForceMode2D.Impulse);
             sprite.color = new Color(1f, 0.63f, 0.59f);
             Invoke(nameof(LoadScene), 1);
+            FindFirstObjectByType<GameSession>().ProcessPlayerDeath();
         }
     }
 

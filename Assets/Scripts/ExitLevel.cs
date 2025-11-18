@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ExitLevel : MonoBehaviour
 {
-        int currentScene;
+    public int currentScene;
 
     void Start()
     {
@@ -15,9 +15,9 @@ public class ExitLevel : MonoBehaviour
         StartCoroutine(LoadNextLevel());
     }
 
-    IEnumerator LoadNextLevel() 
+    IEnumerator LoadNextLevel()
     {
-        yield return new WaitForSecondsRealtime(2f); 
+        yield return new WaitForSecondsRealtime(2f);
         SceneManager.LoadScene(currentScene + 1);
 
     }
