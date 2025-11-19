@@ -16,7 +16,7 @@ public class Bullets : MonoBehaviour
 
     void Update()
     {
-        rigidBody.linearVelocity = new Vector2(5f * bulletDir, 0f);
+        rigidBody.linearVelocity = new Vector2(9f * bulletDir, 0f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -25,7 +25,9 @@ public class Bullets : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Destroy(gameObject, 0.05f);
-        }else        {
+        }
+        else
+                {
             Destroy(gameObject);
         }
     }
